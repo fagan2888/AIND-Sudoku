@@ -3,7 +3,7 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?
-A: For each unit, we search for naked twin box pairs; if found, remove the digits of naked twins from other boxes in that unit. This naked twins reduction strategy is very helpful in reducing the search space when used along with "eliminate" and "only_choice" strategies in depth first search method.
+A: For each unit, we search for naked twin box pairs (two boxes with the same value of two digits); if found, remove the digits of naked twins from other boxes in that unit. Naked twins reduction strategy is very helpful in reducing the search space when used along with "eliminate" and "only_choice" strategies in depth first search method of solving sudoku.
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?

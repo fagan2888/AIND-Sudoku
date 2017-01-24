@@ -13,6 +13,7 @@ boxes = cross(rows, cols)
 row_units = [cross(r, cols) for r in rows]
 column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
+# Compute the 2 diagonal units
 diag_units = [ [ row[idx] for idx, row in enumerate(row_units) ],
                [ row[width - idx - 1] for idx, row in enumerate(row_units) ] ]
 unitlist = row_units + column_units + square_units + diag_units
@@ -39,7 +40,6 @@ def naked_twins(values):
     Returns:
         the values dictionary with the naked twins eliminated from peers.
     """
-
     # Find all instances of naked twins
     # Eliminate the naked twins as possibilities for their peers
     out = {k:v for k,v in values.items()}
@@ -49,18 +49,23 @@ def naked_twins(values):
         # Find all pairs of naked twins
         for box in unit:
             val = values[box]
+            # do only for values with two digits
             if len(val) == 2:
                 if val in bidigits:
+                    # Found a naked twin pair
                     ntwins[val] = (box, bidigits[val])
                 else:
+                    # Found just one box with two digit value
                     bidigits[val] = box
         # For each naked twin pair, reduce the possibilities of other boxes in the unit.
         # Reduction is done based on the observation that the "other" boxes in the unit
         # cannot have the digits present in the naked twins.
         for twinval, tboxes in ntwins.items():
+            # Find set of other boxes in the unit
             others = set(unit) - set(tboxes)
             for other in others:
                 oldval = values[other]
+                # Remove both digits of twin pair from other boxes
                 newval = oldval.replace(twinval[0], '').replace(twinval[1], '')
                 if newval != oldval:
                     out = assign_value(out, other, newval)
@@ -132,6 +137,7 @@ def reduce_puzzle(values):
     while not stalled:
         solved_values_before = len([box for box in values.keys() if len(values[box]) == 1])
         values = eliminate(values)
+        # Call naked twins strat to reduce search space
         values = naked_twins(values)
         values = only_choice(values)
         solved_values_after = len([box for box in values.keys() if len(values[box]) == 1])
@@ -142,6 +148,8 @@ def reduce_puzzle(values):
 
 def solve(grid):
     if isinstance(grid, str):
+        # If input is just a string representation, then convert
+        # to dict form
         grid = grid_values(grid)
     return search(grid)
 
