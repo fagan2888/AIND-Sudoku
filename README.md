@@ -10,8 +10,11 @@ A: Naked twins are two boxes in a unit that have the same value of length 2. For
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?
 
 A: The diagonal sudoku problem has an additional constraint that digits cannot repeat per each diagonal in addition to the regular row, column and square constraints. Like the regular constraints of sudoku, the diagonal constraint is also a local constraint which can be used to reduce the search space without changing the solution of the problem which is exactly what constraint propagation does hence constraint propagation method is an appropriate method to find its solution. The application of constraint propagation with search to diagonal sudoku is similar to how it is applied to normal sudoku, except that there are two more extra units which are the diagonals of the sudoku board. Each unit has the constraint that the digits from 1 to 9 are not repeated. The constraint-propagation-steps involved are :
+
 1. Elimination :- For each solved box, with single digit x in it, we remove the presence of digit x from all of its peers. This is the enforcement of the sudoku rule that there should not be any repeated digit in a unit.
-2. only_choice : In each unit if a digit appears only in exactly one of its boxes, then the value of that box can be reduced to that single digit. 
+
+2. only_choice : In each unit if a digit appears only in exactly one of its boxes, then the value of that box can be reduced to that single digit.
+
 3. naked_twins elimination strategy : As described in answer to question 1, this step finds any naked twin in each unit and enforces the constraint that no squares outside the two naked twins squares can contain the twin values.
 
 ### Install
