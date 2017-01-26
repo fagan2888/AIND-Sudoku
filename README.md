@@ -17,6 +17,8 @@ A: The diagonal sudoku problem has an additional constraint that digits cannot r
 
 3. naked_twins elimination strategy : As described in answer to question 1, this step finds any naked twin in each unit and enforces the constraint that no squares outside the two naked twins squares can contain the twin values.
 
+Just repeating the above three steps may not solve the diagonal sudoku problem especially for harder problems, so we use Depth First Search(DFS) to search in the current solution space and apply the above 3 steps for each traversed step of DFS.
+
 ### Install
 
 This project requires **Python 3**.
